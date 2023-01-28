@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.voidhash.heartstone.R
 import com.voidhash.heartstone.databinding.FragmentMainBinding
@@ -12,6 +13,7 @@ import com.voidhash.heartstone.databinding.FragmentMainBinding
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var fragmentMainBinding: FragmentMainBinding? = null
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,6 +25,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         binding.button3.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_cardFragment)
+            viewModel.getInfo()
         }
 
         binding.button4.setOnClickListener {
