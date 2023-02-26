@@ -25,7 +25,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         binding.button3.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_cardFragment)
-            viewModel.getInfo()
         }
 
         binding.button4.setOnClickListener {

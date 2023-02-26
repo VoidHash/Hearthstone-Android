@@ -43,9 +43,12 @@ android {
 
 def kotlin_version = "1.9.0"
 def lifecycle_version = "2.5.1"
+def navigation_version = "2.5.3"
 def retrofit_version = "2.9.0"
 def okhttp_version = "4.10.0"
-def navigation_version = "2.5.3"
+def rxAndroid_version = "3.0.2"
+def rxJava_version = "3.1.5"
+
 
 dependencies {
 
@@ -65,10 +68,15 @@ dependencies {
     //Retrofit Library
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
 
     //OkHttp Library
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    //Rx Java & Android
+    implementation "io.reactivex.rxjava3:rxandroid:$rxAndroid_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rxJava_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

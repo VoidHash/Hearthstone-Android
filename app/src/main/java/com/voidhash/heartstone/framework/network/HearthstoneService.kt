@@ -1,17 +1,19 @@
 package com.voidhash.heartstone.framework.network
 
+import com.voidhash.heartstone.framework.utils.LiveDataCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object HeartstoneService {
+object HearthstoneService {
 
-    const val BASE_URL = "https://omgvamp-hearthstone-v1.p.rapidapi.com/"
+    private const val BASE_URL = "https://omgvamp-hearthstone-v1.p.rapidapi.com/"
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         this.level = HttpLoggingInterceptor.Level.BODY
@@ -40,6 +42,7 @@ object HeartstoneService {
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
             .create(HearthstoneAPI::class.java)
     }
