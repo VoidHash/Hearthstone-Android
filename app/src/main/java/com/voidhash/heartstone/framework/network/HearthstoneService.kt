@@ -1,10 +1,8 @@
 package com.voidhash.heartstone.framework.network
 
-import com.voidhash.heartstone.framework.utils.LiveDataCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory

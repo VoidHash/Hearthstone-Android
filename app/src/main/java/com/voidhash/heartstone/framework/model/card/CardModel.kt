@@ -1,8 +1,14 @@
 package com.voidhash.heartstone.framework.model.card
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "hearthstone")
 data class CardModel(
+
+	@PrimaryKey
+	val uid: Int = 0,
 
 	//December 2022 - Expansion
 	@field:SerializedName("March of the Lich King")
