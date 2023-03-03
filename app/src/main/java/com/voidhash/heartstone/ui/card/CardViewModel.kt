@@ -15,12 +15,14 @@ import com.voidhash.heartstone.framework.network.HearthstoneService
 import com.voidhash.heartstone.utils.converter.ListCardConverter
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.observers.DisposableCompletableObserver
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.currentCoroutineContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.nio.FloatBuffer
 
 class CardViewModel(application: Application): AndroidViewModel(application) {
 
@@ -65,10 +67,21 @@ class CardViewModel(application: Application): AndroidViewModel(application) {
             CardDatabase::class.java,
             "heartstone-db"
         )
-        .allowMainThreadQueries()
         .build()
 
-        db.cardDao().addCard(value)
+        db.cardDao()
+            .addCard(value)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : DisposableCompletableObserver() {
+              override fun onComplete() {
+                  Log.e("DBG", "Feito")
+              }
+
+              override fun onError(e: Throwable) {
+                  e.printStackTrace()
+              }
+            })
     }
 
     //encerra a conexao feita no metodo getAllCard()
