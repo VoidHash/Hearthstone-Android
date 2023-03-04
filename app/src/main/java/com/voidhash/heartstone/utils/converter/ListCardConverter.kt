@@ -1,6 +1,5 @@
 package com.voidhash.heartstone.utils.converter
 
-import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -12,52 +11,55 @@ import java.lang.reflect.Type
 class ListCardConverter {
 
     private val gson = Gson()
-    private val typeCardBase: Type = object : TypeToken<List<CardBase>>() {}.type
-    private val typeMechanics: Type = object : TypeToken<List<MechanicsItem>>() {}.type
     private val typeString: Type = object : TypeToken<List<String>>() {}.type
     private val typeRuneCost: Type = object : TypeToken<RuneCost>() {}.type
+    private val typeMechanics: Type = object : TypeToken<List<MechanicsItem>>() {}.type
 
-    //CardBase
     @TypeConverter
-    fun fromStringToCardBase(json: String?): List<CardBase> {
-        return gson.fromJson(json, typeCardBase)
+    fun fromString(json: String?): List<String>? {
+        return if(!json.isNullOrBlank())
+            gson.fromJson(json, typeString)
+        else
+            null
     }
 
     @TypeConverter
-    fun fromListCardBaseToString(list: List<CardBase?>?): String {
-        return gson.toJson(list, typeCardBase)
-    }
-
-    //Mechanics
-    @TypeConverter
-    fun fromMechanicsToStringList(json: String?): List<MechanicsItem> {
-        return gson.fromJson(json, typeMechanics)
+    fun fromList(list: List<String?>?): String? {
+        return if(!list.isNullOrEmpty())
+            gson.toJson(list, typeString)
+        else
+            null
     }
 
     @TypeConverter
-    fun fromListMechanicsToString(list: List<MechanicsItem?>?): String {
-        return gson.toJson(list, typeMechanics)
-    }
-
-    //String
-    @TypeConverter
-    fun fromStringToStringList(json: String?): List<String> {
-        return gson.fromJson(json, typeString)
+    fun fromStringToRuneCost(json: String?): RuneCost? {
+        return if(!json.isNullOrBlank())
+            gson.fromJson(json, typeRuneCost)
+        else
+            null
     }
 
     @TypeConverter
-    fun fromListStringToString(list: List<String?>?): String {
-        return gson.toJson(list, typeString)
-    }
-
-    //RuneCost
-    @TypeConverter
-    fun fromStringToRuneCost(json: String?): RuneCost {
-        return gson.fromJson(json, typeRuneCost)
+    fun fromRuneCostToString(runeCost: RuneCost?): String? {
+        return if(runeCost == null)
+            null
+        else
+            gson.toJson(runeCost, typeRuneCost)
     }
 
     @TypeConverter
-    fun fromRuneCostToString(list: RuneCost?): String {
-        return gson.toJson(list, typeRuneCost)
+    fun fromStringToMechanicsItem(json: String?): List<MechanicsItem?>? {
+        return if(!json.isNullOrBlank())
+            gson.fromJson(json, typeMechanics)
+        else
+            null
+    }
+
+    @TypeConverter
+    fun fromMechanicsItemToString(list: List<MechanicsItem?>?): String? {
+        return if(!list.isNullOrEmpty())
+            gson.toJson(list, typeMechanics)
+        else
+            null
     }
 }

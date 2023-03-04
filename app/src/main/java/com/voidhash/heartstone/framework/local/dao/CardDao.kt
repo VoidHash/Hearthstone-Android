@@ -1,23 +1,25 @@
 package com.voidhash.heartstone.framework.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.voidhash.heartstone.framework.model.card.CardModel
+import com.voidhash.heartstone.framework.model.card.CardBase
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface CardDao {
 
-    @Query("SELECT * FROM hearthstone")
-    fun getAllCards(): Flowable<CardModel>
+    @Query("SELECT (SELECT COUNT(*) FROM hearthstone_db) == 0")
+    fun isEmpty(): Single<Boolean>
+
+    @Query("SELECT * FROM hearthstone_db")
+    fun getAllCards(): Single<List<CardBase>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCard(cardList: CardModel) : Completable
+    fun addCard(cardList: List<CardBase>) : Completable
 
-    @Query("DELETE FROM hearthstone")
+    @Query("DELETE FROM hearthstone_db")
     fun deleteAll() : Completable
 
     @Delete
-    fun delete(cardEntity: CardModel) : Completable
+    fun delete(cardEntity: CardBase) : Completable
 }

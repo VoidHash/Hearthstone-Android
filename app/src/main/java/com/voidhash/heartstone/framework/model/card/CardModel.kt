@@ -4,11 +4,120 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "hearthstone")
-data class CardModel(
+@Entity(tableName = "hearthstone_db")
+data class CardBase(
 
 	@PrimaryKey
-	val uid: Int = 0,
+	@field:SerializedName("dbfId")
+	val dbfId: Int? = null,
+
+	@field:SerializedName("cardId")
+	val cardId: String? = null,
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("cardSet")
+	val cardSet: String? = null,
+
+	@field:SerializedName("type")
+	val type: String? = null,
+
+	@field:SerializedName("faction")
+	val faction: String? = null,
+
+	@field:SerializedName("rarity")
+	val rarity: String? = null,
+
+	@field:SerializedName("cost")
+	val cost: Int? = null,
+
+	@field:SerializedName("attack")
+	val attack: Int? = null,
+
+	@field:SerializedName("health")
+	val health: Int? = null,
+
+	@field:SerializedName("durability")
+	val durability: Int? = null,
+
+	@field:SerializedName("armor")
+	val armor: String? = null,
+
+	@field:SerializedName("text")
+	val text: String? = null,
+
+	@field:SerializedName("flavor")
+	val flavor: String? = null,
+
+	@field:SerializedName("artist")
+	val artist: String? = null,
+
+	@field:SerializedName("collectible")
+	val collectible: Boolean? = null,
+
+	@field:SerializedName("elite")
+	val elite: Boolean? = null,
+
+	@field:SerializedName("race")
+	val race: String? = null,
+
+	@field:SerializedName("otherRaces")
+	val otherRaces: List<String?>? = null,
+
+	@field:SerializedName("playerClass")
+	val playerClass: String? = null,
+
+	@field:SerializedName("multiClassGroup")
+	val multiClassGroup: String? = null,
+
+	@field:SerializedName("classes")
+	val classes: List<String?>? = null,
+
+	@field:SerializedName("howToGet")
+	val howToGet: String? = null,
+
+	@field:SerializedName("howToGetGold")
+	val howToGetGold: String? = null,
+
+	@field:SerializedName("howToGetSignature")
+	val howToGetSignature: String? = null,
+
+	@field:SerializedName("runeCost")
+	val runeCost: RuneCost? = null,
+
+	@field:SerializedName("img")
+	val img: String? = null,
+
+	@field:SerializedName("imgGold")
+	val imgGold: String? = null,
+
+	@field:SerializedName("locale")
+	val locale: String? = null,
+
+	@field:SerializedName("mechanics")
+	val mechanics: List<MechanicsItem?>? = null
+)
+
+data class RuneCost(
+
+	@field:SerializedName("frost")
+	val frost: Int? = null,
+
+	@field:SerializedName("unholy")
+	val unholy: Int? = null,
+
+	@field:SerializedName("blood")
+	val blood: Int? = null
+)
+
+data class MechanicsItem(
+
+	@field:SerializedName("name")
+	val name: String? = null
+)
+
+data class CardModel(
 
 	//December 2022 - Expansion
 	@field:SerializedName("March of the Lich King")
@@ -120,114 +229,123 @@ data class CardModel(
 
 	@field:SerializedName("Classic")
 	val classic: List<CardBase?>? = null
-)
+) {
+	fun getCollection(): List<CardBase> {
 
-data class CardBase(
-	@field:SerializedName("cardId")
-	val cardId: String? = null,
+		var collection = mutableListOf<CardBase>()
 
-	@field:SerializedName("dbfId")
-	val dbfId: Int? = null,
+		marchOfTheLichKing?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("name")
-	val name: String? = null,
+		murderAtCastleNathria?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("cardSet")
-	val cardSet: String? = null,
+		voyageToTheSunkenCity?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("type")
-	val type: String? = null,
+		fracturedInAlteracValley?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("faction")
-	val faction: String? = null,
+		unitedInStormwind?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("rarity")
-	val rarity: String? = null,
+		forgedInTheBarrens?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("cost")
-	val cost: Int? = null,
+		madnessAtTheDarkmoonFaire?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("attack")
-	val attack: Int? = null,
+		scholomanceAcademy?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("health")
-	val health: Int? = null,
+		ashesOfOutland?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("durability")
-	val durability: Int? = null,
+		galakrondSAwakening?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("armor")
-	val armor: String? = null,
+		descentOfDragons?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("text")
-	val text: String? = null,
+		saviorsOfUldum?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("flavor")
-	val flavor: String? = null,
+		riseOfShadows?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("artist")
-	val artist: String? = null,
+		rastakhanSRumble?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("collectible")
-	val collectible: Boolean? = null,
+		theBoomsdayProject?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("elite")
-	val elite: Boolean? = null,
+		theWitchwood?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("race")
-	val race: String? = null,
+		koboldsCatacombs?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("otherRaces")
-	val otherRaces: List<String?>? = null,
+		knightsOfTheFrozenThrone?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("playerClass")
-	val playerClass: String? = null,
+		journeyToUnGoro?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("multiClassGroup")
-	val multiClassGroup: String? = null,
+		meanStreetsOfGadgetzan?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("classes")
-	val classes: List<String?>? = null,
+		oneNightInKarazhan?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("howToGet")
-	val howToGet: String? = null,
+		whispersOfTheOldGods?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("howToGetGold")
-	val howToGetGold: String? = null,
+		theLeagueOfExplorers?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("howToGetSignature")
-	val howToGetSignature: String? = null,
+		theGrandTournament?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("runeCost")
-	val runeCost: RuneCost? = null,
+		blackrockMountain?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("img")
-	val img: String? = null,
+		goblinsVsGnomes?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("imgGold")
-	val imgGold: String? = null,
+		naxxramas?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("locale")
-	val locale: String? = null,
+		classic?.forEach { card ->
+			card?.let { collection.add(card) }
+		}
 
-	@field:SerializedName("mechanics")
-	val mechanics: List<MechanicsItem?>? = null
-)
-
-data class RuneCost(
-
-	@field:SerializedName("frost")
-	val frost: Int? = null,
-
-	@field:SerializedName("unholy")
-	val unholy: Int? = null,
-
-	@field:SerializedName("blood")
-	val blood: Int? = null
-)
-
-data class MechanicsItem(
-
-	@field:SerializedName("name")
-	val name: String? = null
-)
+		return collection.toList()
+	}
+}
